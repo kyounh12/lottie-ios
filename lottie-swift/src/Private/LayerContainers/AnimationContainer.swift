@@ -210,7 +210,7 @@ final class AnimationContainer: CALayer {
 }
 
 fileprivate class BlankImageProvider: AnimationImageProvider {
-  func imageForAsset(asset: ImageAsset) -> CGImage? {
-    return nil
+  func imageForAsset(asset: ImageAsset, completion: @escaping (CGImage?) -> Void) {
+    completion(nil)
   }
 }

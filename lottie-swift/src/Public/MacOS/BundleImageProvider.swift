@@ -31,8 +31,15 @@ public class BundleImageProvider: AnimationImageProvider {
     self.bundle = bundle
     self.searchPath = searchPath
   }
+
+  public func imageForAsset(asset: ImageAsset, completion: @escaping (CGImage?) -> Void) {
+    DispatchQueue.global(qos: .background).async { [weak self] in
+      let image = self?.imageForAsset(asset: asset)
+      completion(image)
+    }
+  }
   
-  public func imageForAsset(asset: ImageAsset) -> CGImage? {
+  private func imageForAsset(asset: ImageAsset) -> CGImage? {
     
     if asset.name.hasPrefix("data:"),
       let url = URL(string: asset.name),

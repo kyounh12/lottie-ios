@@ -42,7 +42,11 @@ final class LayerImageProvider {
   func reloadImages() {
     for imageLayer in imageLayers {
       if let asset = imageAssets[imageLayer.imageReferenceID] {
-        imageLayer.image = imageProvider.imageForAsset(asset: asset)
+        imageProvider.imageForAsset(asset: asset) { image in
+          DispatchQueue.main.async {
+            imageLayer.image = image
+          }
+        }
       }
     }
   }
